@@ -1,35 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Grid, ThemeProvider, createTheme } from "@mui/material";
+import PageHeader from "./components/PageHeader";
+import FormCard from "./components/FormCard";
+import TableList from "./components/TableList";
 
-function App() {
-  const [count, setCount] = useState(0)
+const fontResponsive = createTheme();
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+fontResponsive.typography.h1 = {
+  fontSize: "2.0rem",
+  "@media (min-width:600px)": {
+    fontSize: "4.0rem",
+  },
+  [fontResponsive.breakpoints.up("md")]: {
+    fontSize: "6.0rem",
+  },
+  fontFamily: "montserrat",
+};
+
+fontResponsive.typography.h6 = {
+  fontFamily: "montserrat",
+  fontSize: "0.8rem",
+  fontWeight: "700",
+  "@media (min-width:600px)": {
+    fontSize: "1.0rem",
+  },
+  [fontResponsive.breakpoints.up("md")]: {
+    fontSize: "1.2rem",
+  },
+};
+
+export interface Employee {
+  fname: string;
+  lname: string;
+  position: string;
+  seniority: string;
 }
 
-export default App
+export const senioritys = ["Less than a year", "2 - 3 years", "more than 4 years"];
+export const pos = ["Junior","Mid", "Senior", "Technical guru"];
+
+function App() {
+  return (
+    <>
+    <ThemeProvider theme={fontResponsive}>
+      <Grid
+        container
+        justifyContent="center"
+        direction="row"
+        sx={{ width: "100%", minWidth: "320px", p: 3 }}
+      >
+        <Grid item xs={12}>
+          <PageHeader />
+        </Grid>
+        <Grid item xs sx={{ p: 2 }}>
+          <FormCard />
+        </Grid>
+        <Grid item xs={12} md={8} sx={{ p: 2 }}>
+          <TableList />
+        </Grid>
+      </Grid>
+      </ThemeProvider>
+    </>
+  );
+}
+
+export default App;
